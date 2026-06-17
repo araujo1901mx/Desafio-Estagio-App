@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { Login } from './Frontend/login/login';
-import { Schools } from './Frontend/schools/schools';
-import { Students } from './Frontend/students/students';
-import { Teachers } from './Frontend/teachers/teachers';
-import { Users } from './Frontend/users/users';
+import { Login } from './login/login';
+import { Schools } from './schools/schools';
+import { Students } from './students/students';
+import { Teachers } from './teachers/teachers';
+import { Users } from './users/users';
 
 export const routes: Routes = [
   {
