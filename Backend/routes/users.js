@@ -1,22 +1,8 @@
-import express from 'express'
-import { createUser } from '../Controllers/UserController'
-import router from './login'
+const express          = require('express');
+const router           = express.Router();
+const UserController   = require('../Controllers/UserController');
 
-const router = express.Router()
-
-router.post('/users', createUser)
-
-
-
-
-/*
-var express = require('express');
-var router = express.Router();
-
- GET users listing. 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// POST /api/users – Cadastrar usuário (rota pública, não precisa de login)
+router.post('/', UserController.createUser);
 
 module.exports = router;
-*/

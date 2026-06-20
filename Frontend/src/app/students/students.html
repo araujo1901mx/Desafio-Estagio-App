@@ -1,1 +1,54 @@
-<p>students works!</p>
+<nav class="nav-bar">
+  <span class="nav-brand">Sistema Escolar</span>
+  <a routerLink="/schools">Escolas</a>
+  <a routerLink="/teachers">Professores</a>
+  <a routerLink="/students">Alunos</a>
+  <button class="logout-btn" (click)="logout()">Sair</button>
+</nav>
+
+<div class="list-page">
+  <h2>Alunos</h2>
+
+  <div class="alert alert-error"   *ngIf="erro">{{ erro }}</div>
+  <div class="alert alert-success" *ngIf="sucesso">{{ sucesso }}</div>
+
+  <div class="card full-card">
+    <h3>Novo aluno</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="studentName">Nome completo</label>
+        <input id="studentName" type="text" [(ngModel)]="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="studentCpf">CPF</label>
+        <input id="studentCpf" type="text" [(ngModel)]="cpf"
+               name="cpf" maxlength="11" placeholder="Somente números" required />
+      </div>
+      <div class="form-group">
+        <label for="studentBirthday">Data de nascimento</label>
+        <input id="studentBirthday" type="date" [(ngModel)]="birthday" name="birthday" required />
+      </div>
+      <div class="form-group">
+        <label for="teacherSelect">Professor responsável</label>
+        <select id="teacherSelect" [(ngModel)]="teacher_id" name="teacher_id" required>
+          <option value="">Selecione um professor</option>
+          <option *ngFor="let teacher of teachers" [value]="teacher.id">
+            {{ teacher.user?.name }} — {{ teacher.school?.name }}
+          </option>
+        </select>
+      </div>
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Salvando...' : 'Cadastrar' }}
+      </button>
+    </form>
+  </div>
+
+  <p class="list-count">{{ students.length }} aluno(s) cadastrado(s)</p>
+
+  <div class="list-item" *ngFor="let student of students">
+    <div class="item-name">{{ student.name }}</div>
+    <div class="item-detail">CPF: {{ student.CPF }} — Professor: {{ student.teacher?.user?.name }}</div>
+  </div>
+
+  <p class="empty-msg" *ngIf="students.length === 0">Nenhum aluno cadastrado.</p>
+</div>

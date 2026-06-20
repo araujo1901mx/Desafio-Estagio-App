@@ -27,8 +27,8 @@ module.exports = {
         type: Sequelize.UUID,
         references: { model: 'teachers', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false
+        onDelete: 'SET NULL', // Se deletar o professor, o aluno pode ficar sem professor temporariamente
+        allowNull: true
       },
       updated_at: {
         type: Sequelize.DATE,

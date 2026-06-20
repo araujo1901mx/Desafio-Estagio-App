@@ -1,1 +1,42 @@
-<p>schools works!</p>
+<nav class="nav-bar">
+  <span class="nav-brand">Sistema Escolar</span>
+  <a routerLink="/schools">Escolas</a>
+  <a routerLink="/teachers">Professores</a>
+  <a routerLink="/students">Alunos</a>
+  <button class="logout-btn" (click)="logout()">Sair</button>
+</nav>
+
+<div class="list-page">
+  <h2>Escolas</h2>
+
+  <div class="alert alert-error"   *ngIf="erro">{{ erro }}</div>
+  <div class="alert alert-success" *ngIf="sucesso">{{ sucesso }}</div>
+
+  <div class="card full-card">
+    <h3>Nova escola</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="schoolName">Nome</label>
+        <input id="schoolName" type="text" [(ngModel)]="name"
+               name="name" placeholder="Nome da escola" required />
+      </div>
+      <div class="form-group">
+        <label for="schoolAddress">Endereço</label>
+        <input id="schoolAddress" type="text" [(ngModel)]="address"
+               name="address" placeholder="Endereço completo" required />
+      </div>
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Salvando...' : 'Cadastrar' }}
+      </button>
+    </form>
+  </div>
+
+  <p class="list-count">{{ schools.length }} escola(s) cadastrada(s)</p>
+
+  <div class="list-item" *ngFor="let school of schools">
+    <div class="item-name">{{ school.name }}</div>
+    <div class="item-detail">{{ school.address }}</div>
+  </div>
+
+  <p class="empty-msg" *ngIf="schools.length === 0">Nenhuma escola cadastrada.</p>
+</div>

@@ -1,9 +1,6 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Express' });
-});
-
+const express           = require('express');
+const router            = express.Router();
+const SessionController = require('../Controllers/SessionController');
+// POST /api/login
+router.post('/', SessionController.login);
 module.exports = router;

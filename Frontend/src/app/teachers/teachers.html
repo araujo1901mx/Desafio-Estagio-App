@@ -1,1 +1,59 @@
-<p>teachers works!</p>
+<nav class="nav-bar">
+  <span class="nav-brand">Sistema Escolar</span>
+  <a routerLink="/schools">Escolas</a>
+  <a routerLink="/teachers">Professores</a>
+  <a routerLink="/students">Alunos</a>
+  <button class="logout-btn" (click)="logout()">Sair</button>
+</nav>
+
+<div class="list-page">
+  <h2>Professores</h2>
+
+  <div class="alert alert-error"   *ngIf="erro">{{ erro }}</div>
+  <div class="alert alert-success" *ngIf="sucesso">{{ sucesso }}</div>
+
+  <div class="card full-card">
+    <h3>Novo professor</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="teacherName">Nome completo</label>
+        <input id="teacherName" type="text" [(ngModel)]="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="teacherCpf">CPF</label>
+        <input id="teacherCpf" type="text" [(ngModel)]="cpf"
+               name="cpf" maxlength="11" placeholder="Somente números" required />
+      </div>
+      <div class="form-group">
+        <label for="teacherBirthday">Data de nascimento</label>
+        <input id="teacherBirthday" type="date" [(ngModel)]="birthday" name="birthday" required />
+      </div>
+      <div class="form-group">
+        <label for="teacherPassword">Senha</label>
+        <input id="teacherPassword" type="password" [(ngModel)]="password"
+               name="password" placeholder="Mínimo 6 caracteres" required />
+      </div>
+      <div class="form-group">
+        <label for="schoolSelect">Escola</label>
+        <select id="schoolSelect" [(ngModel)]="school_id" name="school_id" required>
+          <option value="">Selecione uma escola</option>
+          <option *ngFor="let school of schools" [value]="school.id">
+            {{ school.name }}
+          </option>
+        </select>
+      </div>
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Salvando...' : 'Cadastrar' }}
+      </button>
+    </form>
+  </div>
+
+  <p class="list-count">{{ teachers.length }} professor(es) cadastrado(s)</p>
+
+  <div class="list-item" *ngFor="let teacher of teachers">
+    <div class="item-name">{{ teacher.user?.name }}</div>
+    <div class="item-detail">CPF: {{ teacher.user?.CPF }} — Escola: {{ teacher.school?.name }}</div>
+  </div>
+
+  <p class="empty-msg" *ngIf="teachers.length === 0">Nenhum professor cadastrado.</p>
+</div>

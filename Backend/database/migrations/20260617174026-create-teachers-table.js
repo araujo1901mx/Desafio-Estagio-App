@@ -10,21 +10,11 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      birthday: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      CPF: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      password: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.UUID,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         allowNull: false
       },
       school_id: {

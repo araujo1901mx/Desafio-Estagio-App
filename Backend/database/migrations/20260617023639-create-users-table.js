@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false
       },
       birthday: {
-        type: Sequelize.DATAONLY,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       CPF: {
