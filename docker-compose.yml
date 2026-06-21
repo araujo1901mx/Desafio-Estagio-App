@@ -1,0 +1,36 @@
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: estagio-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: usersdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./Backend
+    container_name: estagio-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+    depends_on:
+      - db
+    # Comando opcional para garantir que o BD inicializou antes de iniciar o node (ajuda com migrations se precisar rodar no docker)
+    # entrypoint: ["sh", "-c", "sleep 5 && npx sequelize-cli db:migrate && npm start"]
+
+  frontend:
+    build: ./Frontend
+    container_name: estagio-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
