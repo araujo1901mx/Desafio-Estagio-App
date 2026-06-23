@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  // URL base do seu Backend
-  private baseUrl = 'http://localhost:3000/api';
+  // URL base do seu Backend (Vercel)
+  private baseUrl = 'https://desafio-estagio-backend.vercel.app/api';
 
   constructor(private http: HttpClient) {}
 

@@ -31,7 +31,9 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ error: err.message });
 });
 
-// Liga o servidor na porta 3000
-app.listen(3000, () => console.log(' Servidor rodando na porta 3000'));
+// Liga o servidor na porta 3000 (apenas localmente, no Vercel quem controla e o proprio Vercel)
+if (!process.env.VERCEL) {
+    app.listen(3000, () => console.log(' Servidor rodando na porta 3000'));
+}
 
 module.exports = app;

@@ -7,19 +7,37 @@ const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
 
 // Cria a conexão com o banco
-const connection = new Sequelize(
-    dbConfig.database,
-    dbConfig.username,
-    dbConfig.password,
-    {
-        ...dbConfig,
+let connection;
+
+if (process.env.DATABASE_URL) {
+    // Na nuvem (Neon) — usa a connection string direta com SSL
+    connection = new Sequelize(process.env.DATABASE_URL, {
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: { require: true, rejectUnauthorized: false }
+        },
         define: {
-            timestamps: true,      // Ativa created_at e updated_at
-            underscored: true,     // Usa snake_case no banco (created_at, não createdAt)
+            timestamps: true,
+            underscored: true,
             underscoredAll: true
         }
-    }
-);
+    });
+} else {
+    // Local — usa as credenciais do config/database.js
+    connection = new Sequelize(
+        dbConfig.database,
+        dbConfig.username,
+        dbConfig.password,
+        {
+            ...dbConfig,
+            define: {
+                timestamps: true,
+                underscored: true,
+                underscoredAll: true
+            }
+        }
+    );
+}
 
 // Inicializa cada Model passando a conexão para eles
 User.init(connection);
